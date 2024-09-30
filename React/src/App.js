@@ -1,62 +1,33 @@
 import './App.css';
-
-import React, { useState } from 'react'
-
-import { useKorisnik } from './servisi/kServisi';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';  
 import Login from './komponente/Login';
-
-
+import MainPage from './komponente/MainPage';  
 
 function App() {
 
-  
   const [imeKorisnika, setImeKorisnika] = useState("");
-  const [email, setEmail] = useState("")
-  const {kreiraj} = useKorisnik();
+  const [email, setEmail] = useState("");
+  const [korisnik, setKorisnik] = useState(null)
   
-  
-  const kreirajKorisnikaFunc = async (e) =>
-  {
-
-    e.preventDefault();
-
-      const korisnik = {
-
-        imeKorisnika : imeKorisnika,
-        email : email
-
-      }
-
-      await kreiraj(korisnik)
-      setImeKorisnika("");
-      setEmail("");
-      
-      
-
-
-
-     
-
-
-  }
-
-
-
-
-
-
-
-
   return (
-    <div className="App">
-      <Login 
-        imeKorisnika={imeKorisnika}
-        setImeKorisnika={setImeKorisnika}
-        email={email}
-        setEmail={setEmail}
-        kreirajKorisnikaFunc={kreirajKorisnikaFunc}
-      />
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />  
+          <Route path="/login" element={
+            <Login 
+              imeKorisnika={imeKorisnika}
+              setImeKorisnika={setImeKorisnika}
+              email={email}
+              setEmail={setEmail}
+              setKorisnik={setKorisnik}
+            />} 
+          />
+          <Route path="/guess" element={<MainPage  korisnik={korisnik}/>} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
