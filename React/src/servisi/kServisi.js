@@ -1,4 +1,4 @@
-import { kreirajKorisnika } from '../api/automobiliService';
+import { kreirajKorisnika } from '../api/korisnikService';
 
 export const useKorisnik = () => {
   const kreiraj = async (korisnik) => {
