@@ -1,6 +1,8 @@
 import React, { useEffect,  useState } from 'react';
 import { getAllAuta } from '../api/automobiliService';
 import { useSkor } from '../servisi/skorServisi';
+import { prikaziTopKorisnike } from '../api/korisnikService';
+import TopModal from './TopModal';
 
 const MainPage = ({ korisnik }) => {
   const [auta, setAuta] = useState([]);
@@ -9,7 +11,9 @@ const MainPage = ({ korisnik }) => {
   const [skor, setSkor] = useState(0);
   const [highSkor, setHighSkor] = useState(korisnik?.brojPogodjenihAuta);
   const [zavrsenaIgra, setZavrsenaIgra] = useState(false);
-  
+  const [topKorisnici, setTopKorisnici] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   const { azurirajSkor1 } = useSkor();
 
   
@@ -57,12 +61,30 @@ const MainPage = ({ korisnik }) => {
     }
   };
 
+  const handleTopKorisnici = async () => {
+
+    try
+    {
+      const response = await prikaziTopKorisnike();
+      setTopKorisnici(response.data);
+      setIsModalOpen(true);
+
+    }
+    catch (error)
+    {
+      console.log(error);
+    }
+
+
+  }
  
 
   return (
     <div>
       <h1>Zdravo, {korisnik.imeKorisnika}</h1>
       <h2>Tvoj email je: {korisnik.email}</h2>
+      <button onClick={handleTopKorisnici}>Prikazi Top korisnike</button>
+      <TopModal topKorisnici={topKorisnici} isOpen= {isModalOpen}  onClose={() => setIsModalOpen(false)} />
       <h2>Tvoj trenutni skor je {skor}/{auta.length}</h2>
       <h2>Tvoj najveci skor je {highSkor}</h2>
   
