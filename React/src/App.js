@@ -8,7 +8,8 @@ function App() {
 
   const [imeKorisnika, setImeKorisnika] = useState("");
   const [email, setEmail] = useState("");
-  const [korisnik, setKorisnik] = useState(null)
+  const [korisnik, setKorisnik] = useState(null);
+  
   
   return (
     <Router>

@@ -31,7 +31,7 @@ export async function prikaziTopKorisnike() {
 export async function azurirajSkor(imeKorisnika, skor) {
     
 
-    return await axios.put(`API_URL/${imeKorisnika}/skor/${skor}`)
+    return await axios.put(`${API_URL}/${imeKorisnika}/skor/${skor}`)
 
 }
 
