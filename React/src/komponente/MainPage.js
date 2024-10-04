@@ -3,6 +3,8 @@ import { getAllAuta } from '../api/automobiliService';
 import { useSkor } from '../servisi/skorServisi';
 import { prikaziTopKorisnike } from '../api/korisnikService';
 import TopModal from './TopModal';
+import './MainPage.css'; 
+
 
 const MainPage = ({ korisnik }) => {
   const [auta, setAuta] = useState([]);
@@ -80,31 +82,32 @@ const MainPage = ({ korisnik }) => {
  
 
   return (
-    <div>
-      <h1>Zdravo, {korisnik.imeKorisnika}</h1>
-      <h2>Tvoj email je: {korisnik.email}</h2>
-      <button onClick={handleTopKorisnici}>Prikazi Top korisnike</button>
-      <TopModal topKorisnici={topKorisnici} isOpen= {isModalOpen}  onClose={() => setIsModalOpen(false)} />
-      <h2>Tvoj trenutni skor je {skor}/{auta.length}</h2>
-      <h2>Tvoj najveci skor je {highSkor}</h2>
+    <div className="container-1">
+      
+      <button className="open-modal-button-1" onClick={handleTopKorisnici}>Prikazi Top korisnike</button>
+      
+      <TopModal topKorisnici={topKorisnici} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      
+      <div className="scores-1">
+        <h2 className="current-score-1">Tvoj trenutni skor je {skor}/{auta.length}</h2>
+        <h2 className="high-score-1">Tvoj najveci skor je {highSkor}</h2>
+      </div>
   
       {auta.length > 0 ? (
-        <div>
+        <div className="game-container-1">
           {!zavrsenaIgra && (
             <>
-              <h2>Trenutni auto je {auta[trenutniAutoIndex].ime}</h2>
+              <img className="car-image-1" src={`./slike/${auta[trenutniAutoIndex].slikaUrl}`} alt={auta[trenutniAutoIndex].ime} />
               <input
                 type="text"
                 value={pogodak}
                 onChange={(e) => setPogodak(e.target.value)}
                 placeholder='Napisite model ovog auta'
-                
+                className="guess-input-1"
               />
-              <button onClick={handlePogodi}>Provjeri</button>
+              <button className="check-button-1" onClick={handlePogodi}>Provjeri</button>
             </>
           )}
-
-
           {zavrsenaIgra && <p>Bravo, majstore! Prekucao si!</p>}
         </div>
       ) : (
@@ -112,6 +115,7 @@ const MainPage = ({ korisnik }) => {
       )}
     </div>
   );
+  
   
 };
 
